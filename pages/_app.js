@@ -1,19 +1,35 @@
-import * as React from 'react'
-import NextApp from 'next/app'
-
-// import '@hackclub/theme/fonts/reg-bold.css'
-import theme from '@hackclub/theme'
+import '@hackclub/theme/fonts/reg-bold.css'
+import Meta from '@hackclub/meta'
 import { ThemeProvider } from 'theme-ui'
-import ColorSwitcher from '../components/color-switcher'
+import theme from '../lib/theme'
+import Script from 'next/script'
+import Head from 'next/head'
 
-export default class App extends NextApp {
-  render() {
-    const { Component, pageProps } = this.props
-    return (
+export default function App({ Component, pageProps }) {
+  return (
+    <>
+      <Head>
+        <link rel="icon" href="/assets/logo/red_logo/hackclubbutwal.svg" />
+      </Head>
+      <Meta
+        as={Head}
+        name="HackClub Butwal"
+        title="HackClub Butwal – Coming Soon"
+        description="Official Hack Club in Butwal, Nepal. Join us for coding, making, and community!"
+        color="#ec3750"
+        image="/assets/logo/red_logo/hackclubbutwal.svg"
+        url="https://butwal.hackclub.com"
+        instagram="@HackClubButwal"
+      />
+      <Script
+        src="https://cdn.usefathom.com/script.js"
+        data-site="NXBJA2"
+        strategy="afterInteractive"
+        crossOrigin="anonymous"
+      />
       <ThemeProvider theme={theme}>
-        <ColorSwitcher />
         <Component {...pageProps} />
       </ThemeProvider>
-    )
-  }
+    </>
+  )
 }

@@ -1,3 +1,8 @@
+# HackClub Butwal - Coming Soon
+
+This project is the placeholder for the official Hack Club Butwal website. Stay tuned for updates!
+
+---
 # Hack Club Theme Starter
 
 A sample [Next.js] project for getting started with [MDX], [Theme UI], & [Hack Club Theme].
