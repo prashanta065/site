@@ -61,8 +61,8 @@ export default function Buttons({
             fontWeight: "400",
             fontSize: primary ? ["18px", "20px", "22px"] : [1, "16px", "18px"],
             backdropFilter: "blur(2px)",
-          fontWeight: fontWeight,
-          zIndex: 999,
+            fontWeight: fontWeight,
+            zIndex: 999,
         }}
         as="a"
         href={link || "/"}

@@ -37,7 +37,7 @@ const fadeOut = keyframes`
 
 /**
  * Displays a full-screen animated loading screen with a logo and text, then triggers a callback after the animation completes.
- * 
+ *
  * @param {Object} props
  * @param {Function} props.onAnimationEnd - Callback invoked after the loading animation finishes (approximately 3 seconds).
  * @returns {JSX.Element} The loading screen component.

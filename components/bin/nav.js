@@ -70,9 +70,9 @@ function NavLinks({ direction = "row", onClick }) {
 
 /**
  * Renders the site logo and heading, changing appearance when the magic feature is active.
- * 
+ *
  * Displays a clickable logo image and heading text. When `magicActive` is true, both the logo and heading use alternate styles and content. Clicking the logo triggers the provided handler.
- * 
+ *
  * @param {Object} props
  * @param {number} props.clicks - The current number of logo clicks.
  * @param {Function} props.handleLogoClick - Handler for logo click events.
@@ -104,7 +104,7 @@ function Logo({ clicks, handleLogoClick, hovered, setHovered, magicActive }) {
           src={
               magicActive ? "/assets/logo/blogo.svg" : "/assets/logo/rlogo.svg"
           }
-          alt="Site logo"
+          alt={magicActive ? "Butwal Hacks logo" : "HackClub Butwal logo"}
           width={40}
           height={40}
         />

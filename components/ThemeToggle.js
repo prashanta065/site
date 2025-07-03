@@ -26,7 +26,7 @@ export default function ThemeToggle() {
           p: 0,
           borderRadius: 0,
         color: "text",
-        border: "none",
+          border: "none",
         cursor: "pointer",
           '&:hover': {
               bg: 'transparent',

@@ -5,7 +5,7 @@ import Tilt from "../../tilt";
 
 /**
  * Renders a promotional UI section for the Sprig hardware console, displaying images, descriptive text, and interactive elements.
- * 
+ *
  * @param {Object} props
  * @param {number} props.stars - The number of GitHub stars for the Sprig hardware repository.
  * @param {number} props.consoleCount - The number of teenagers using Sprig consoles, shown in the promotional message.
