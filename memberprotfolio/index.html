@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Name - Portfolio</title>
+
+  <!-- Favicon (your logo) -->
+  <link rel="icon" type="image/png" href="images/logo.png">
+
+  <!-- Font Awesome (for icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <!-- External CSS file -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- =================== NAVBAR =================== -->
+<nav>
+  <!-- 🔧 Replace with your own logo in images/ -->
+  <img src="images/logo.png" alt="Logo" class="logo" id="hackLogo">
+
+  <ul>
+    <li><a href="#about" class="nav-link"><i class="fa fa-user"></i> About</a></li>
+    <li><a href="#skills" class="nav-link"><i class="fa fa-code"></i> Skills</a></li>
+    <li><a href="#experience" class="nav-link"><i class="fa fa-briefcase"></i> Experience</a></li>
+    <li><a href="#education" class="nav-link"><i class="fa fa-graduation-cap"></i> Education</a></li>
+    <li><a href="#projects" class="nav-link"><i class="fa fa-diagram-project"></i> Projects</a></li>
+    <li><a href="#contact" class="nav-link"><i class="fa fa-envelope"></i> Contact</a></li>
+    <li><i class="fa fa-moon nav-toggle" id="navTheme"></i></li>
+  </ul>
+
+  <!-- Hamburger for mobile -->
+  <div class="hamburger"><span></span><span></span><span></span></div>
+  <div class="hamburger-menu"></div>
+</nav>
+
+<!-- =================== MAIN CONTENT =================== -->
+<main>
+  <!-- PROFILE SECTION -->
+  <div class="profile-container">
+    <!-- 🔧 Replace with your profile photo (images/profile.jpg) -->
+    <img class="member-photo" src="images/profile.jpg" alt="Profile Photo">
+    <h1 class="member-name"></h1>
+    <div class="member-post"></div>
+    <div class="member-id"></div>
+  </div>
+
+  <!-- About -->
+  <section id="about"><h2>About</h2><p class="about-text"></p></section>
+
+  <!-- Skills -->
+  <section id="skills"><h2>Skills</h2><div class="skills-list"></div></section>
+
+  <!-- Experience -->
+  <section id="experience"><h2>Experience</h2><div class="timeline"></div></section>
+
+  <!-- Education -->
+  <section id="education"><h2>Education</h2><div class="timeline"></div></section>
+
+  <!-- Projects -->
+  <section id="projects"><h2>Projects</h2><ul class="projects-list"></ul></section>
+
+  <!-- Contact -->
+  <section id="contact"><h2>Contact</h2><div class="contact-grid"></div></section>
+</main>
+
+<!-- =================== FOOTER =================== -->
+<footer>
+  <p>© <span id="year"></span> Your Name. All rights reserved.</p>
+  <div class="footer-icons"></div>
+</footer>
+
+<!-- =================== SCRIPT =================== -->
+<script>
+/***********************************************
+ * 1. UPDATE YOUR INFORMATION HERE
+ *    - Only edit the member object below
+ *    - Change name, skills, projects, links, etc.
+ ***********************************************/
+const member = {
+  name:"Your Name",   // 🔧 Your full name
+  post:"Your Role",   // 🔧 Job/Position
+  memberId:"ID-001",  // 🔧 Custom ID or leave blank
+  photo:"images/profile.jpg", // 🔧 Profile photo path
+  about:`Write a short bio about yourself here...`,
+
+  // 🔧 Add your skills
+  skills:["Skill 1","Skill 2","Skill 3"],
+
+  // 🔧 Add your experiences
+  experience:[
+    {role:"Your Role",company:"Company Name",period:"2025",description:"What you did here"}
+  ],
+
+  // 🔧 Add your education
+  education:[
+    {degree:"Degree / Level",institution:"School/College",period:"Years",description:"Description here"}
+  ],
+
+  // 🔧 Add your projects
+  projects:[
+    {name:"Project Name",link:"#",description:"Short description"}
+  ],
+
+  // 🔧 Contact details
+  contact:{
+    email:"your@email.com",
+    social:[
+      {icon:"fab fa-facebook-f",link:"#"},
+      {icon:"fab fa-github",link:"#"},
+      {icon:"fab fa-linkedin-in",link:"#"}
+    ],
+    location:"Your City, Country"
+  },
+
+  // 🔧 Footer links
+  footerLinks:[
+    {icon:"fab fa-github",link:"#"},
+    {icon:"fab fa-instagram",link:"#"}
+  ]
+};
+
+/***********************************************
+ * 2. POPULATE WEBSITE AUTOMATICALLY
+ *    - No need to edit below this line
+ ***********************************************/
+document.querySelector(".member-name").textContent=member.name;
+document.querySelector(".member-post").textContent=member.post;
+document.querySelector(".member-id").textContent=`Member ID: ${member.memberId}`;
+document.querySelector(".member-photo").src=member.photo;
+document.querySelector(".about-text").textContent=member.about;
+
+// Skills
+member.skills.forEach(s=>{
+  const d=document.createElement("div");
+  d.className="skill-pill";d.textContent=s;
+  document.querySelector(".skills-list").appendChild(d);
+});
+
+// Experience
+member.experience.forEach(e=>{
+  const d=document.createElement("div");
+  d.className="timeline-item";
+  d.innerHTML=`<h3>${e.role} - ${e.company}</h3><span>${e.period}</span><p>${e.description}</p>`;
+  document.querySelector("#experience .timeline").appendChild(d);
+});
+
+// Education
+member.education.forEach(e=>{
+  const d=document.createElement("div");
+  d.className="timeline-item";
+  d.innerHTML=`<h3>${e.degree} - ${e.institution}</h3><span>${e.period}</span><p>${e.description}</p>`;
+  document.querySelector("#education .timeline").appendChild(d);
+});
+
+// Projects
+member.projects.forEach(p=>{
+  const li=document.createElement("li");
+  li.innerHTML=`<a href="${p.link}" target="_blank">${p.name}</a><p>${p.description}</p>`;
+  li.addEventListener("click",()=>window.open(p.link,"_blank"));
+  document.querySelector(".projects-list").appendChild(li);
+});
+
+// Contact
+const contactGrid=document.querySelector(".contact-grid");
+contactGrid.innerHTML=`
+  <div class="contact-card"><h3>Email</h3><p>${member.contact.email}</p></div>
+  <div class="contact-card"><h3>Social Media</h3>
+    <div class="contact-icons">${member.contact.social.map(s=>`<a href="${s.link}"><i class="${s.icon}"></i></a>`).join('')}</div>
+  </div>
+  <div class="contact-card"><h3>Location</h3><p>${member.contact.location}</p></div>
+`;
+
+// Footer
+document.getElementById("year").textContent=new Date().getFullYear();
+document.querySelector(".footer-icons").innerHTML=member.footerLinks.map(f=>`<a href="${f.link}"><i class="${f.icon}"></i></a>`).join('');
+</script>
+</body>
+</html>

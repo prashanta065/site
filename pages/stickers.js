@@ -4,10 +4,6 @@ import Head from 'next/head'
 import Nav from '../components/bin/nav'
 // import BGImg from '../components/background-image'
 import Footer from '../components/bin/Footer'
-// import ForceTheme from '../components/force-theme'
-
-import fs from 'fs'
-import path from 'path'
 import {startCase} from 'lodash'
 
 const color = '#EC37AD'
@@ -21,7 +17,6 @@ function customStartCase(st) {
 
 const StickersPage = ({stickers = []}) => [
     <Box as="main" key="main" sx={{textAlign: 'center'}}>
-        // <ForceTheme theme="dark"/>
         <Nav dark/>
         <Meta
             as={Head}
@@ -161,9 +156,14 @@ const StickersPage = ({stickers = []}) => [
 export default StickersPage
 
 export const getStaticProps = () => {
-    const stickersDir = path.join(process.cwd(), 'public', 'stickers')
-    const stickers = fs
-        .readdirSync(stickersDir)
-        .filter(sticker => sticker !== 'hero.jpg')
-    return {props: {stickers}}
+    let stickers = [];
+    try {
+        const fs = require('fs');
+        const path = require('path');
+        const stickersDir = path.join(process.cwd(), 'public', 'stickers');
+        stickers = fs.readdirSync(stickersDir).filter(sticker => sticker !== 'hero.jpg');
+    } catch (e) {
+        // Directory missing or error reading, fallback to empty
+    }
+    return {props: {stickers}};
 }

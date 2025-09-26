@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hack Club Butwal-HCB 006</title>
+<link rel="icon" type="image/png" href="hcb.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+
+<style>
+/* =================== THEME COLORS =================== */
+:root{
+  --primary:#7c5dfa;      /* violet-blue accent */
+  --primary-hover:#9673ff;
+  --secondary:#f5f7fb;    /* light background */
+  --text:#1e1e1e;
+  --card-bg:rgba(255,255,255,0.85);
+  --hover-bg:rgba(124,93,250,0.1);
+  --transition:0.35s;
+}
+body.dark{
+  --primary:#9d88ff;
+  --primary-hover:#b6a4ff;
+  --secondary:#0d1117;
+  --text:#e6edf3;
+  --card-bg:rgba(22,27,34,0.9);
+  --hover-bg:rgba(157,136,255,0.12);
+}
+
+/* RESET */
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:'Segoe UI',sans-serif;
+  background:var(--secondary);
+  color:var(--text);
+  transition:background var(--transition),color var(--transition);
+  scroll-behavior:smooth;
+  line-height:1.6;
+}
+
+/* NAVBAR */
+nav{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1rem 2rem;
+  background:var(--card-bg);
+  position:sticky;top:0;z-index:1000;
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(0,0,0,0.05);
+}
+nav .logo{height:48px;cursor:pointer;transition:transform .3s;}
+nav .logo:hover{transform:scale(1.08);}
+nav ul{list-style:none;display:flex;gap:1.4rem;align-items:center;}
+nav ul li a{
+  color:var(--text);text-decoration:none;font-weight:600;
+  padding:0.4rem 0.6rem;
+  transition:color var(--transition);
+}
+nav ul li a:hover{color:var(--primary-hover);}
+nav ul li a.active{color:var(--primary);}
+.nav-toggle{cursor:pointer;font-size:1.3rem;color:var(--primary);transition:.3s;}
+.nav-toggle:hover{color:var(--primary-hover);}
+
+/* Hamburger */
+.hamburger{display:none;flex-direction:column;gap:6px;cursor:pointer;}
+.hamburger span{
+  display:block;width:26px;height:3px;background:var(--primary);
+  border-radius:2px;transition:.3s;
+}
+.hamburger.open span:nth-child(1){transform:translateY(9px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-9px) rotate(-45deg);}
+.hamburger-menu{
+  position:absolute;top:60px;right:2rem;
+  background:var(--card-bg);
+  padding:1rem;border:1px solid var(--primary);
+  border-radius:12px;display:none;flex-direction:column;
+  gap:1rem;min-width:180px;
+}
+.hamburger-menu a{
+  color:var(--text);text-decoration:none;font-weight:600;
+  transition:color var(--transition);
+}
+.hamburger-menu a:hover{color:var(--primary);}
+.hamburger-menu .toggle-dark{
+  display:flex;justify-content:center;font-size:1.3rem;
+  color:var(--primary);cursor:pointer;
+}
+
+/* Responsive */
+@media(max-width:768px){
+  nav ul{display:none;}
+  .hamburger{display:flex;}
+}
+
+main{max-width:1100px;margin:3rem auto;padding:0 1rem;}
+
+/* PROFILE */
+.profile-container{text-align:center;margin-bottom:3rem;}
+.member-photo{
+  width:200px;height:200px;border-radius:50%;
+  object-fit:cover;
+  box-shadow:0 15px 30px rgba(0,0,0,0.25);
+  animation:floatPic 4s ease-in-out infinite;
+}
+@keyframes floatPic{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+.member-name{font-size:2.5rem;color:var(--primary);margin:1rem 0 0.3rem;}
+.member-post,.member-id{font-size:1.05rem;color:#777;}
+body.dark .member-post,body.dark .member-id{color:#aaa;}
+.hack-flag{width:140px;margin-top:1rem;animation:flagWave 3s infinite ease-in-out;}
+@keyframes flagWave{0%,100%{transform:rotate(0deg);}50%{transform:rotate(6deg);}}
+
+/* Sections */
+section{
+  margin-bottom:2.5rem;
+  padding:2rem;
+  background:var(--card-bg);
+  border-radius:18px;
+  box-shadow:0 0 20px rgba(0,0,0,0.08);
+  backdrop-filter:blur(6px);
+  opacity:0;transform:translateY(40px);
+  transition:all 0.8s ease,background var(--transition);
+}
+section.visible{opacity:1;transform:translateY(0);}
+section h2{
+  font-size:1.9rem;
+  border-left:6px solid var(--primary);
+  padding-left:0.9rem;
+  margin-bottom:1rem;
+  color:var(--primary);
+}
+
+/* Skills */
+.skills-list{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+  gap:1rem;
+}
+.skill-pill{
+  background:var(--hover-bg);
+  border-radius:12px;
+  padding:0.7rem;
+  text-align:center;
+  font-weight:600;
+  color:var(--text);
+  transition:0.35s;
+}
+.skill-pill:hover{background:var(--primary);color:#fff;transform:scale(1.05);}
+
+/* Timeline */
+.timeline{position:relative;margin-left:1rem;border-left:3px solid var(--primary);}
+.timeline-item{position:relative;margin-bottom:1.5rem;padding-left:1rem;}
+.timeline-item::before{
+  content:'';position:absolute;left:-11px;top:0.2rem;width:18px;height:18px;
+  background:var(--primary);border-radius:50%;box-shadow:0 0 6px var(--primary);
+}
+.timeline-item h3{font-size:1.1rem;margin-bottom:0.25rem;}
+.timeline-item span{color:#777;font-style:italic;font-size:0.9rem;}
+body.dark .timeline-item span{color:#aaa;}
+
+/* Projects */
+.projects-list{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:1rem;
+  list-style:none;
+}
+.projects-list li{
+  background:var(--hover-bg);
+  padding:1rem;border-radius:14px;
+  transition:0.4s;cursor:pointer;
+}
+.projects-list li:hover{
+  transform:translateY(-5px) scale(1.03);
+  box-shadow:0 8px 25px rgba(0,0,0,0.15);
+  background:var(--primary);
+  color:#fff;
+}
+.projects-list li a{color:inherit;text-decoration:none;font-weight:700;display:block;margin-bottom:0.4rem;}
+
+/* Contact */
+.contact-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:1.5rem;margin-top:1rem;
+}
+.contact-card{
+  background:var(--hover-bg);
+  border-radius:14px;
+  padding:1.2rem;
+  transition:0.35s;
+}
+.contact-card:hover{transform:translateY(-4px);}
+.contact-card h3{color:var(--primary);margin-bottom:0.4rem;}
+.contact-icons{
+  display:flex;justify-content:center;gap:0.8rem;margin-top:0.8rem;
+}
+.contact-icons a{
+  width:44px;height:44px;border-radius:50%;
+  background:var(--card-bg);
+  color:var(--primary);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;border:1px solid var(--primary);
+  transition:all 0.3s;text-decoration:none;
+}
+.contact-icons a:hover{background:var(--primary);color:#fff;}
+
+/* Footer */
+footer{
+  background:var(--card-bg);
+  padding:1rem 0;text-align:center;
+  font-size:0.85rem;
+  border-top:1px solid rgba(0,0,0,0.05);
+}
+footer .footer-icons{
+  margin-top:0.4rem;
+  display:flex;justify-content:center;gap:0.8rem;
+}
+footer .footer-icons a{
+  color:var(--primary);font-size:1.3rem;
+  transition:0.3s;text-decoration:none;
+}
+footer .footer-icons a:hover{color:var(--primary-hover);transform:scale(1.15);}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <img src="hcb.png" alt="Hack Club Butwal Logo" class="logo" id="hackLogo">
+  <ul>
+    <li><a href="#about" class="nav-link"><i class="fa fa-user"></i> About</a></li>
+    <li><a href="#skills" class="nav-link"><i class="fa fa-code"></i> Skills</a></li>
+    <li><a href="#experience" class="nav-link"><i class="fa fa-briefcase"></i> Experience</a></li>
+    <li><a href="#education" class="nav-link"><i class="fa fa-graduation-cap"></i> Education</a></li>
+    <li><a href="#projects" class="nav-link"><i class="fa fa-diagram-project"></i> Projects</a></li>
+    <li><a href="#contact" class="nav-link"><i class="fa fa-envelope"></i> Contact</a></li>
+    <li><i class="fa fa-moon nav-toggle" id="navTheme"></i></li>
+  </ul>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+  <div class="hamburger-menu">
+    <a href="#about"><i class="fa fa-user"></i> About</a>
+    <a href="#skills"><i class="fa fa-code"></i> Skills</a>
+    <a href="#experience"><i class="fa fa-briefcase"></i> Experience</a>
+    <a href="#education"><i class="fa fa-graduation-cap"></i> Education</a>
+    <a href="#projects"><i class="fa fa-diagram-project"></i> Projects</a>
+    <a href="#contact"><i class="fa fa-envelope"></i> Contact</a>
+    <div class="toggle-dark"><i class="fa fa-moon" id="hamburgerTheme"></i></div>
+  </div>
+</nav>
+
+<main>
+  <div class="profile-container">
+    <img class="member-photo" src="pb.jpg" alt="Profile Photo">
+    <h1 class="member-name"></h1>
+    <div class="member-post"></div>
+    <div class="member-id"></div>
+    <img src="hc.png" alt="Hack Club Flag" class="hack-flag">
+  </div>
+
+  <section id="about">
+    <h2>About</h2>
+    <p class="about-text"></p>
+  </section>
+
+  <section id="skills"><h2>Skills</h2><div class="skills-list"></div></section>
+  <section id="experience"><h2>Experience</h2><div class="timeline"></div></section>
+  <section id="education"><h2>Education</h2><div class="timeline"></div></section>
+  <section id="projects"><h2>Projects</h2><ul class="projects-list"></ul></section>
+
+  <section id="contact">
+    <h2>Contact Me</h2>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <h3>Email</h3><p>www.prashantabhusal@gmail.com</p>
+      </div>
+      <div class="contact-card">
+        <h3>Social Media</h3>
+        <div class="contact-icons">
+          <a href="https://www.facebook.com/prashantabhusal065"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://github.com/prashanta065"><i class="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/mrbhusal/"><i class="fab fa-linkedin-in"></i></a>
+         <a href="mailto:www.prashantabhusal@gmail.com"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+      <div class="contact-card"><h3>Location</h3><p>Arghakhanchi, Nepal</p></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>© 2025 Hack Club Butwal. Part of the global Hack Club network.</p>
+  <p>Hack Club Butwal is fiscally sponsored by The Hack Foundation (d.b.a Hack Club), a 501(c)(3) nonprofit (EIN: 81-2908499).</p>
+  <div class="footer-icons">
+    <a href="https://butwal.hackclub.com/"><i class="fa fa-globe"></i></a>
+    <a href="https://github.com/HackClub-Butwal"><i class="fab fa-github"></i></a>
+    <a href="https://www.instagram.com/hcbutwal/"><i class="fab fa-instagram"></i></a>
+  </div>
+</footer>
+
+<script>
+/* === Same Data & Script Logic (unchanged) === */
+const member = {
+  name:"Prashanta Bhusal",
+  post:"Treasurer of Hack Club Butwal",
+  memberId:"HCB 006",
+  photo:"pb.jpg",
+  about:`Hello! I'm Prashanta Bhusal, a passionate and innovative developer dedicated to crafting modern digital experiences.
+         I specialize in web design, graphics, and AI-based solutions.
+         Beyond coding, I love collaborating with creative teams, mentoring new hackers,
+         and exploring cutting-edge technologies that push the boundaries of what's possible in digital design.`,
+  skills:["Graphic Designing","Web Development","Presentation Making","AI & Automation","Communication","Problem Solving"],
+  experience:[{role:"Treasurer",company:"Hack Club Butwal",period:"2025",description:"Managing club finances and organizing events."}],
+  education:[
+    {degree:"Nursery - Grade 8",institution:"Hansapur Public English Boarding School",period:"Completed",description:"Strong focus on science and technology."},
+    {degree:"Grade 9-10",institution:"Kalika Manavgyan Secondary School",period:"Current",description:"Specializing in Computer Engineering."}
+  ],
+  projects:[
+    {name:"Boba Drop",link:"https://prashanta065.github.io/Boba-Drop-HACK-CLUB/",description:"A creative and collaborative web development initiative organized by Hack Club Butwal, showcasing the power of clean, modern, and responsive design."},
+    {name:"Protfolio Website",link:"https://mrbhusal.vercel.app",description:"Showcasing design & functionality."}
+  ]
+};
+document.querySelector(".member-name").textContent=member.name;
+document.querySelector(".member-post").textContent=member.post;
+document.querySelector(".member-id").textContent=`Member ID: ${member.memberId}`;
+document.querySelector(".member-photo").src=member.photo;
+document.querySelector(".about-text").textContent=member.about;
+member.skills.forEach(s=>{
+  const d=document.createElement("div");
+  d.className="skill-pill";d.textContent=s;
+  document.querySelector(".skills-list").appendChild(d);
+});
+member.experience.forEach(e=>{
+  const d=document.createElement("div");
+  d.className="timeline-item";
+  d.innerHTML=`<h3>${e.role} - ${e.company}</h3><span>${e.period}</span><p>${e.description}</p>`;
+  document.querySelector("#experience .timeline").appendChild(d);
+});
+member.education.forEach(e=>{
+  const d=document.createElement("div");
+  d.className="timeline-item";
+  d.innerHTML=`<h3>${e.degree} - ${e.institution}</h3><span>${e.period}</span><p>${e.description}</p>`;
+  document.querySelector("#education .timeline").appendChild(d);
+});
+member.projects.forEach(p=>{
+  const li=document.createElement("li");
+  li.innerHTML=`<a href="${p.link}" target="_blank">${p.name}</a><p>${p.description}</p>`;
+  li.addEventListener("click",()=>window.open(p.link,"_blank"));
+  document.querySelector(".projects-list").appendChild(li);
+});
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add("visible");});
+},{threshold:0.2});
+document.querySelectorAll("section,.skill-pill,.timeline-item,.projects-list li").forEach(el=>observer.observe(el));
+const hamburger=document.querySelector(".hamburger");
+const menu=document.querySelector(".hamburger-menu");
+hamburger.addEventListener("click",()=>{
+  hamburger.classList.toggle("open");
+  menu.style.display=menu.style.display==="flex"?"none":"flex";
+});
+function setTheme(dark){
+  document.body.classList.toggle("dark",dark);
+  navTheme.className=dark?"fa fa-sun nav-toggle":"fa fa-moon nav-toggle";
+  hamburgerTheme.className=dark?"fa fa-sun":"fa fa-moon";
+  localStorage.setItem("theme",dark?"dark":"light");
+}
+const navTheme=document.getElementById("navTheme");
+const hamburgerTheme=document.getElementById("hamburgerTheme");
+navTheme.addEventListener("click",()=>setTheme(!document.body.classList.contains("dark")));
+hamburgerTheme.addEventListener("click",()=>setTheme(!document.body.classList.contains("dark")));
+if(localStorage.getItem("theme")==="dark") setTheme(true);
+document.getElementById("hackLogo").addEventListener("click",()=>{window.location.href="https://butwal.hackclub.com";});
+const navLinks=document.querySelectorAll(".nav-link");
+window.addEventListener("scroll",()=>{
+  let current="";
+  document.querySelectorAll("section").forEach(sec=>{
+    const top=sec.offsetTop-140;
+    if(scrollY>=top) current=sec.getAttribute("id");
+  });
+  navLinks.forEach(link=>{
+    link.classList.remove("active");
+    if(link.getAttribute("href").includes(current)) link.classList.add("active");
+  });
+});
+</script>
+</body>
+</html>
